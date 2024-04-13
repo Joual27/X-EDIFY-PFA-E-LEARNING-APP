@@ -1,12 +1,12 @@
 
 
 
-import it from '../assets/it.png'
-import ai from '../assets/ai.png'
-import business from '../assets/business.png'
-import english from '../assets/english.png'
-import management from '../assets/management.png'
-import arrow from '../assets/arrow.svg'
+import it from '../../assets/it.png'
+import ai from '../../assets/ai.png'
+import business from '../../assets/business.png'
+import english from '../../assets/english.png'
+import management from '../../assets/management.png'
+import arrow from '../../assets/arrow.svg'
 
 
 

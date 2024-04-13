@@ -1,7 +1,7 @@
-import course from '../assets/course.png'
-import student from '../assets/audience.png'
-import teacher from '../assets/teacher.png'
-import locations from '../assets/countries.png'
+import course from '../../assets/course.png'
+import student from '../../assets/audience.png'
+import teacher from '../../assets/teacher.png'
+import locations from '../../assets/countries.png'
 
 export default function Stats(){
 

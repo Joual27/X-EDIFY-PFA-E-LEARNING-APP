@@ -18,7 +18,11 @@ export default {
       whiteBg : '#FFF6F4',
       bgYellow : '#FFFAA0',
       overlay : '#030712',
-      slate : '#E5E4E2'
+      slate : '#E5E4E2',
+      red : '#ff0000',
+      secRed : '#ff5252',
+      green : 'rgb(34 197 94)',
+      secHovers : '#FF8D21'
     },
     extend: {},
   },

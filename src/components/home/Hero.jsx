@@ -1,4 +1,4 @@
-import heroPic from '../assets/Learning-cuate.svg'
+import heroPic from '../../assets/Learning-cuate.svg'
 import PropTypes from "prop-types";
 
 

@@ -1,6 +1,6 @@
 import TeacherSignUp from "./TeacherSignUp.jsx";
-import student from "../assets/audience.png";
-import teacher from "../assets/teacher.png";
+import student from "../../assets/audience.png";
+import teacher from "../../assets/teacher.png";
 import {useState} from "react";
 import StudentSignUp from "./StudentSignUp.jsx";
 
@@ -8,8 +8,6 @@ import StudentSignUp from "./StudentSignUp.jsx";
 export default function Register(){
 
     const [registrationType,setRegistrationType] = useState('student');
-
-
     const switchToStudent = () => {
         setRegistrationType('student');
     }

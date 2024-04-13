@@ -1,17 +1,16 @@
 
-import Navbar from "../components/Navbar.jsx";
-import Hero from "../components/Hero.jsx";
-import Stats from "../components/Stats.jsx";
-import Footer from "../components/Footer.jsx";
-import Categories from "../components/Categories.jsx";
-import HomeCourses from "../components/Home-courses.jsx";
-import About from "../components/About.jsx";
-import Partners from "../components/Partners.jsx";
-import Auth from "../components/Auth.jsx";
+import Navbar from "../components/home/Navbar.jsx";
+import Hero from "../components/home/Hero.jsx";
+import Stats from "../components/home/Stats.jsx";
+import Footer from "../components/home/Footer.jsx";
+import Categories from "../components/home/Categories.jsx";
+import HomeCourses from "../components/home/Home-courses.jsx";
+import About from "../components/home/About.jsx";
+import Partners from "../components/home/Partners.jsx";
+import Auth from "../components/home/Auth.jsx";
 import {useState} from "react";
 
 export default function Home(){
-
     const [priorityPage,setPriorityPage] = useState('');
     const [showAuth,setShowAuth] = useState(false);
 
@@ -26,7 +25,6 @@ export default function Home(){
     function hideAuth(){
         setShowAuth(false);
     }
-
 
     return (
         <>

@@ -1,16 +1,15 @@
 
 
-import authPic from '../assets/auth.svg'
+import authPic from '../../assets/auth.svg'
 
 import Register from "./Register.jsx";
 import Login from "./Login.jsx";
 import PropTypes from "prop-types";
+import {useState} from "react";
+import {signUpAsStudent} from "../../data/auth/authenticationData.js";
 
 
 export default function Auth({shownComponent,onLoginBtnClick,onRegisterBtnClick}){
-
-
-
     function switchToLogin(){
 
         onLoginBtnClick();
@@ -20,10 +19,8 @@ export default function Auth({shownComponent,onLoginBtnClick,onRegisterBtnClick}
         onRegisterBtnClick();
     }
 
-
-
     return(
-            <div className='w-[50%] flex h-[60vh] bg-whiteBg rounded-3xl z-20 relative' style={{zIndex : 10}} >
+            <div className='w-[50%] flex min-h-[60vh] bg-whiteBg rounded-3xl z-20 relative' style={{zIndex : 10}} >
                 <div className='w-[50%] bg-bgYellow flex flex-col gap-[1rem] bg-opacity-70 rounded-l-3xl px-[7.5%]'>
                     <img src={authPic} className='w-full h-[60%]' alt=""/>
                     <div className='flex flex-col gap-[1rem] text-center'>

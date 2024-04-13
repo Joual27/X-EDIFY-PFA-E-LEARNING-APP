@@ -1,12 +1,12 @@
 
-import google from '../assets/google.png'
-import microsoft from '../assets/microsoft.png'
-import cambridge from '../assets/cambridge.png'
-import oxford from '../assets/oxford.png'
-import openstax from '../assets/openstax.png'
-import stanford from '../assets/stanford.png'
-import ibm from '../assets/ibm.png'
-import x from '../assets/X.png'
+import google from '../../assets/google.png'
+import microsoft from '../../assets/microsoft.png'
+import cambridge from '../../assets/cambridge.png'
+import oxford from '../../assets/oxford.png'
+import openstax from '../../assets/openstax.png'
+import stanford from '../../assets/stanford.png'
+import ibm from '../../assets/ibm.png'
+import x from '../../assets/X.png'
 
 
 export default function Partners(){

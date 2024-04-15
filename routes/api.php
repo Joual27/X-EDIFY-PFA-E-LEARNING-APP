@@ -21,3 +21,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('register/student', [\App\Http\Controllers\AuthController::class, 'studentRegistration']);
 Route::post('register/instructor', [\App\Http\Controllers\AuthController::class, 'instructorRegistration']);
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);
+
+
+
+Route::get('categories/all', [\App\Http\Controllers\CourseController::class, 'getAllCategories']);
+Route::get('course/data/{publisher_id}', [\App\Http\Controllers\CourseController::class, 'getCourseOnCreation']);
+Route::post('course/create', [\App\Http\Controllers\CourseController::class, 'createCourse']);
+Route::post('chapter/create', [\App\Http\Controllers\CourseController::class, 'createChapter']);
+Route::post('topic/create', [\App\Http\Controllers\CourseController::class, 'createTopic']);
+

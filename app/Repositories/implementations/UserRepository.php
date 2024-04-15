@@ -1,24 +1,26 @@
 <?php
 namespace App\Repositories\implementations;
+use App\Models\User;
 use App\Repositories\interfaces\UserRepositoryInterface;
 
 class UserRepository implements UserRepositoryInterface{
     public function findUserByEmail($email){
-        $user = \App\Models\User::where('email',$email)->first();
+        $user = \App\Models\User::with('instructor','student')->where('email',$email)->first();
         return $user;
     }
     public function createStudent($credentials){
         try {
-            $user = \App\Models\User::create([
+            $created_user = \App\Models\User::create([
                 'name' => $credentials['name'],
                 'email' => $credentials['email'],
                 'password' => $credentials['password'],
             ]);
             \App\Models\Student::create([
-                'user_id' => $user->id,
+                'user_id' => $created_user->id,
                 'school' => $credentials['school']
             ]);
-            return $user;
+            return User::with('student')->find($created_user->id);
+
         }
         catch (\Exception $e){
             return response()->json(['error' => $e->getMessage()], 500);
@@ -35,7 +37,7 @@ class UserRepository implements UserRepositoryInterface{
                 'user_id' => $user->id,
                 'field' => $credentials['field']
             ]);
-            return $user;
+            return User::with('instructor')->find($user->id);
         }
         catch (\Exception $e){
             return response()->json(['error' => $e->getMessage()], 500);

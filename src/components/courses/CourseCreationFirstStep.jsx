@@ -27,10 +27,18 @@ const CourseCreationFirstStep = () => {
     }
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name] : e.target.value
-        })
+        if (e.target.name === 'image') {
+            const selectedFile = e.target.files[0];
+            setFormData({
+                ...formData,
+                [e.target.name]: selectedFile,
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [e.target.name]: e.target.value,
+            });
+        }
     }
 
 
@@ -57,17 +65,28 @@ const CourseCreationFirstStep = () => {
     }, [createdSuccess]);
 
     useEffect(() => {
+        if(errors){
+            const timer = setTimeout(() => {
+                setErrors([]);
+            }, 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [errors]);
 
+
+    useEffect(() => {
+        console.log(courseData)
     }, []);
 
     useEffect(() => {
        bringCategories();
+       console.log(courseData);
     }, []);
     return(
         <div className='h-[90%] mt-[5%] flex flex-col gap-[2rem] '>
            <div className='flex flex-col gap-[0.75rem] items-center'>
                <img src={instructor} className='w-[70px] h-[70px]' alt=""/>
-               <p className='text-2xl font-medium text-main'>Hello , Mr. <span className='text-primary'>{user.name}</span> . {courseData ? 'You didnt Finish creating your course' : 'Let\'s start the process of course creation .'} </p>
+               <p className='text-2xl font-medium text-main'>Hello , Mr. <span className='text-primary'>{user.name}</span> . {!courseData.title ? 'Let\'s start the process of course creation .' : 'You didnt Finish creating your course'} </p>
                <p className='text-gray text-[0.95rem] font-medium'>First Fill Your Course Infos ...</p>
            </div>
             <div className='w-[80%] ml-[15%] min-h-[200px] mb-[3rem]'>
@@ -88,18 +107,18 @@ const CourseCreationFirstStep = () => {
                 <form className='w-full flex flex-wrap items-center gap-[1rem]' method='POST' onSubmit={handleSubmit}>
                     <input type="text" placeholder='Course Title'
                            onChange={handleChange}
-                           value={courseData && courseData.title }
-                           disabled={!!courseData}
+                           value={courseData !== {} && courseData.title }
+                           disabled={courseData?.title ? true : false}
                            name='title'
                            className='bg-slate w-[27.5%] bg-opacity-40 text-[0.9rem] px-[1rem] py-[0.6rem] rounded-xl text-main focus:outline-none'/>
                     <input type="text" placeholder='Description'
-                           value={courseData && courseData.description }
-                           disabled={!!courseData}
+                           value={courseData !== {} && courseData.description }
+                           disabled={courseData?.title ? true : false}
                            onChange={handleChange}
                            name='description'
                            className='bg-slate w-[27.5%] bg-opacity-40 text-[0.9rem] px-[1rem] py-[0.6rem] rounded-xl text-main focus:outline-none'/>
                     <select name="category_id"
-                            disabled={!!courseData}
+                            disabled={courseData?.title ? true : false}
                             onChange={handleChange}
                             className='bg-slate w-[27.5%] bg-opacity-40 text-[0.9rem] px-[1rem] py-[0.75rem] rounded-xl text-main focus:outline-none'>
                         <option value=''>Course Category</option>
@@ -107,27 +126,34 @@ const CourseCreationFirstStep = () => {
                             categories.map(category => (
                                 <option key={category.id}
                                         value={category.id}
-                                        selected={courseData && courseData.category_id === category.id ? 'selected' : ''}
+                                        selected={courseData !== {} && courseData.category_id === category.id ? 'selected' : ''}
                                 >{category.name}</option>
                             ))
                         }
                     </select>
-                    <div className='w-[80%] flex ml-[15%] gap-[1rem]'>
+                    <div className='w-full flex gap-[1.5rem]'>
                         <input type="text" placeholder='Max Duration'
-                               disabled={!!courseData}
+                               disabled={courseData?.title ? true : false}
                                onChange={handleChange}
-                               value={courseData && courseData.max_duration / 60}
+                               value={courseData?.title && courseData.max_duration / 60}
                                name='max_duration'
                                className='bg-slate w-[27.5%] bg-opacity-40 text-[0.9rem] px-[1rem] py-[0.6rem] rounded-xl text-main focus:outline-none'/>
                         <select name="duration_type"
-                                disabled={!!courseData}
+                                disabled={courseData?.title ? true : false}
                                 onChange={handleChange}
                                 className='bg-slate w-[27.5%] bg-opacity-40 text-[0.9rem] px-[1rem] py-[0.75rem] rounded-xl text-main focus:outline-none'>
                             <option value=''>Duration type</option>
-                            <option value='hours' selected={courseData ? 'selected' : ""}>Hours</option>
+                            <option value='hours' selected={courseData?.title ? 'selected' : ""}>Hours</option>
                             <option value='days'>Days</option>
                         </select>
-                        {courseData === {} && <button type='submit' className='px-[0.75rem] py-[0.4rem] my-auto rounded-lg bg-secondary hover:bg-secHovers text-white font-medium'>Create</button>}
+                        <div className="mx-auto max-w-xs">
+                            <input type="file"
+                                   onChange={handleChange}
+                                   name='image'
+                                   className="mt-2 block w-full text-sm file:mr-4 file:rounded-md file:border-0 file:bg-teal-500 file:py-2 file:px-4 file:text-sm file:font-semibold file:text-white hover:file:bg-teal-700 focus:outline-none disabled:pointer-events-none disabled:opacity-60"/>
+                        </div>
+                        {!courseData.title && <button type='submit'
+                                                      className='px-[0.75rem] py-[0.4rem] my-auto rounded-lg bg-secondary hover:bg-secHovers text-white font-medium'>Create</button>}
                     </div>
                 </form>
             </div>

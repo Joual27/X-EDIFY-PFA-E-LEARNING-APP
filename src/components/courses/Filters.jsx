@@ -1,8 +1,16 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import {useContext, useState} from "react";
+import {PublicCoursesContext} from "../../pages/AllCourses.jsx";
 
 
 const Filters = () => {
+    const {setSearchTerm} = useContext(PublicCoursesContext);
+
+    const handleSearchTermChange = (e) => {
+        setSearchTerm(e.target.value);
+    }
+
     return(
         <div className='w-full'>
             <div className='py-[3rem]'>
@@ -14,6 +22,7 @@ const Filters = () => {
                     <div className="relative">
                         <FontAwesomeIcon icon={faSearch} className="absolute fa fa-search text-gray top-3 left-4"/>
                         <input type="text"
+                               onKeyUp={handleSearchTermChange}
                                className="bg-dark py-[0.6rem] w-full px-12 rounded-lg focus:outline-none font-medium text-[0.9rem] placeholder:text-main placeholder:text-[0.8rem] placeholder:text-center"
                                placeholder='Search by course or category'
                                name="search"/>

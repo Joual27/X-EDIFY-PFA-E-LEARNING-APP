@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Content extends Model
 {
     use HasFactory;
-    protected $fillable = ['data_type','topic_id'];
+    protected $fillable = ['id','link_to_ressource','topic_id'];
     public function topic(){
         return $this->belongsTo(Topic::class);
     }

@@ -29,4 +29,12 @@ Route::get('course/data/{publisher_id}', [\App\Http\Controllers\CourseController
 Route::post('course/create', [\App\Http\Controllers\CourseController::class, 'createCourse']);
 Route::post('chapter/create', [\App\Http\Controllers\CourseController::class, 'createChapter']);
 Route::post('topic/create', [\App\Http\Controllers\CourseController::class, 'createTopic']);
+Route::delete('chapter/delete/{id}', [\App\Http\Controllers\CourseController::class, 'deleteChapter']);
+Route::delete('topic/delete/{id}', [\App\Http\Controllers\CourseController::class, 'deleteTopic']);
+Route::post('content/create', [\App\Http\Controllers\CourseController::class, 'createContent']);
 
+Route::post('course/post', [\App\Http\Controllers\CourseController::class, 'postCourse']);
+Route::get('instructor/{instructor_id}/courses', [\App\Http\Controllers\CourseController::class, 'fetchCoursesOfInstructor']);
+Route::delete('course/delete/{id}', [\App\Http\Controllers\CourseController::class, 'deleteCourse']);
+Route::get('courses/public/all', [\App\Http\Controllers\CourseController::class, 'fetchAllCourses']);
+Route::Post('courses/filter',[\App\Http\Controllers\CourseController::class, 'filterCourses']);

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class CourseRequest extends FormRequest
+class   CourseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,8 @@ class CourseRequest extends FormRequest
             'duration_type' => 'required|string',
             'max_duration' => 'required|integer',
             'publisher_id' => 'required',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ];
     }
 

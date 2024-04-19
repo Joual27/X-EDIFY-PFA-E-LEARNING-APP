@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('title');
-            $table->integer('estimated_duration');
-            $table->foreignId('course_id')->constrained('courses');
+            $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
         });
     }
 

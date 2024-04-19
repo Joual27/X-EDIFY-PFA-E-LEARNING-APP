@@ -16,9 +16,9 @@ return new class extends Migration
             $table->timestamps();
             $table->string('title');
             $table->string('description');
-            $table->integer('max-duration');
-            $table->foreignId('publisher_id')->constrained('instructors');
-            $table->foreignId('category_id')->constrained('categories');
+            $table->integer('max_duration');
+            $table->foreignId('publisher_id')->constrained('instructors')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
         });
     }
 

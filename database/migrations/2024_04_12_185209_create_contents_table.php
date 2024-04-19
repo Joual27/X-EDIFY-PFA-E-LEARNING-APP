@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('data_type');
-            $table->foreignId('topic_id')->constrained('topics');
+            $table->foreignId('topic_id')->constrained('topics')->onDelete('cascade');
         });
     }
 

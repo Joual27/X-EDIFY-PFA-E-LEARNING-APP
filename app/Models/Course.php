@@ -9,8 +9,7 @@ class Course extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title','description','max_duration','publisher_id','category_id'];
-
+    protected $fillable = ['title','description','max_duration','publisher_id','category_id','image'];
     public function category(){
         return $this->belongsTo(Category::class);
     }

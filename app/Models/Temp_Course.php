@@ -9,7 +9,7 @@ class Temp_Course extends Model
 {
     use HasFactory;
     protected $table = 'temp_courses';
-    protected $fillable = ['title','description','max_duration','publisher_id','category_id'];
+    protected $fillable = ['title','description','max_duration','publisher_id','category_id','image'];
     public function category(){
         return $this->belongsTo(Category::class);
     }

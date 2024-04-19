@@ -4,6 +4,7 @@ namespace App\Services\implementations;
 
 use App\Models\Course;
 use App\Models\Temp_Chapter;
+use App\Models\Temp_Content;
 use App\Models\Temp_Course;
 use App\Models\Temp_Topic;
 use App\Repositories\interfaces\CourseRepositoryInterface;
@@ -93,6 +94,145 @@ class CourseService implements CourseServiceInterface
         ];
     }
 
+    public function removeChapter($id)
+    {
+        $res = $this->courseRepository->findChapterById($id);
+        if($res instanceof Temp_Chapter){
+            $res->delete();
+            return [
+                'case' => 'success'
+            ];
+        }
+        else{
+            return [
+                'case' => 'error',
+                'message' => $res
+            ];
+        }
+    }
+    public function removeTopic($id){
+        $res = $this->courseRepository->findTopicById($id);
+        if($res instanceof Temp_Topic){
+            $res->delete();
+            return [
+                'case' => 'success'
+            ];
+        }
+        else{
+            return [
+                'case' => 'error',
+                'message' => $res
+            ];
+        }
+    }
+    public function createContent($contentData){
+        $res = $this->courseRepository->uploadContent($contentData);
+        if($res instanceof Temp_Content){
+            return[
+                'case' => 'success',
+                'content' => $res
+            ];
+        }
+        else{
+            return [
+                'case' => 'error',
+                'message' => $res
+            ];
+        }
+    }
+    public function postCourse($publisher_id){
+        $res = $this->courseRepository->finalizeCourseCreation($publisher_id);
+        if($res instanceof Course){
+            return[
+                'case' => 'success'
+            ];
+        }
+        else{
+            return [
+                'case' => 'error',
+                'message' => $res
+            ];
+        }
+    }
+    public function fetchCoursesOfInstructor($instructor_id){
+        $res = $this->courseRepository->getCoursesOfInstructor($instructor_id);
+        if($res[0] instanceof Course){
+            return[
+                'case' => 'success',
+                'courses' => $res
+            ];
+        }
+        else{
+            return [
+                'case' => 'error',
+                'message' => $res
+            ];
+        }
+    }
 
+    public function deleteCourse($id)
+    {
+        $res = $this->courseRepository->getCourseById($id);
+        if($res instanceof Course){
+            $outcome = $this->courseRepository->removeCourse($res);
+            if ($outcome === true){
+                return[
+                    'case' => 'success',
+                    'course' => $res
+                ];
+            }
+            else{
+                return [
+                    'case' => 'error',
+                    'message' => $res
+                ];
+            }
+        }
+        else{
+            return [
+                'case' => 'error',
+                'message' => $res
+            ];
+        }
+    }
+
+    public function fetchAllCourses()
+    {
+        $res = $this->courseRepository->getAllCourses();
+        if($res[0] instanceof Course){
+            return[
+                'case' => 'success',
+                'courses' => $res
+            ];
+        }
+        else{
+            return [
+                'case' => 'error',
+                'message' => $res
+            ];
+        }
+    }
+
+    public function filterCourses($searchTerm)
+    {
+        $res = $this->courseRepository->getCourseByTerm($searchTerm);
+        if($res){
+            return[
+                'case' => 'success',
+                'courses' => $res
+            ];
+        }
+        else if($res === null){
+            return[
+                'case' => 'empty',
+            ];
+        }
+        else{
+            return [
+                'case' => 'error',
+                'message' => $res
+            ];
+        }
+    }
 
 }

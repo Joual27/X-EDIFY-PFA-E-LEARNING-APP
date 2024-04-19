@@ -9,8 +9,8 @@ class Temp_Content extends Model
 {
     use HasFactory;
     protected $table = 'temp_contents';
+    protected $fillable = ['id','link_to_ressource','topic_id'];
 
-    protected $fillable = ['data_type','topic_id'];
 
     public function topic(){
         return $this->belongsTo(Temp_Topic::class,'topic_id');

@@ -44,5 +44,18 @@ class AdminRepository implements AdminRepositoryInterface
             return $e->getMessage();
         }
     }
+    public function addCategory($category_name){
+        try{
+            return Category::create([
+                'name' => $category_name
+            ]);
+        }
+        catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+
+
 
 }

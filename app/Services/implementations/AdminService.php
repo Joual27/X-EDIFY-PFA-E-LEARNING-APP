@@ -67,5 +67,21 @@ class AdminService implements AdminServiceInterface{
         }
     }
 
+    public function createCategory($category_name)
+    {
+        $res = $this->adminRepository->addCategory($category_name);
+        if ($res instanceof Category){
+            return[
+                'case' => 'success'
+            ];
+        }
+        else{
+            return [
+                'case' => 'error',
+                'message' => $res
+            ];
+        }
+    }
+
 
 }

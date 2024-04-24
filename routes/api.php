@@ -22,6 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/admin/stats',[AdminController::class,'fetchStats']);
 Route::get('/admin/users/all',[AdminController::class,'fetchAllUsers']);
+Route::get('/admin/categories/all',[AdminController::class,'fetchAllCategories']);
+Route::get('/admin/category/create',[AdminController::class,'createUser']);
 
 
 Route::middleware('guest')->group(function () {

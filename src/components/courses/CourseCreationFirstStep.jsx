@@ -79,6 +79,15 @@ const CourseCreationFirstStep = () => {
     }, []);
 
     useEffect(() => {
+        if (errors) {
+            const timer = setTimeout(() => {
+                setErrors({});
+            }, 2500);
+            return () => clearTimeout(timer);
+        }
+    }, [errors]);
+
+    useEffect(() => {
        bringCategories();
        console.log(courseData);
     }, []);

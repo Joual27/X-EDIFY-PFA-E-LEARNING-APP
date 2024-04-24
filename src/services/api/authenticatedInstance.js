@@ -1,13 +1,23 @@
 import axios from "axios";
 
 const authenticatedInstance = axios.create({
-    baseURL : 'http://localhost/api',
+    baseURL: "http://localhost/api",
     headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
+        Accept: "application/json",
         "Authorization": `Bearer ${localStorage.getItem('token')}`
     },
-    crossDomain: true
+    crossDomain: true,
 });
 
-export default authenticatedInstance
+export const authenticatedFormInstance = axios.create({
+    baseURL: "http://localhost/api",
+    headers: {
+        "Content-Type": "multipart/form-data",
+        Accept: "application/json",
+        "Authorization": `Bearer ${localStorage.getItem('token')}`
+    },
+    crossDomain: true,
+});
+
+
+export default authenticatedInstance;

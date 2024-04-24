@@ -3,9 +3,16 @@ import {
     addContent,
     addCourse,
     addTopic,
-    bringCourseOnCreation, getAllCourses, getCourseByTerm, getCoursesOfOInstructor,
-    removeChapter, removeCourse,
-    removeTopic, uploadCourse
+    bringCourseOnCreation,
+    getAllCourses,
+    getCourseByTerm, getCourseData,
+    getCoursesOfCategory,
+    getCoursesOfOInstructor,
+    getTopCategories,
+    removeChapter,
+    removeCourse,
+    removeTopic,
+    uploadCourse
 } from "./courseService.js";
 
 
@@ -55,4 +62,17 @@ export const fetchAllCourses = async (page) => {
 
 export const filterCourses = async (term,page) => {
     return await getCourseByTerm(term,page);
+}
+
+export const fetchTopCategories = async () => {
+    return await getTopCategories();
+}
+
+
+export const filterCoursesByCategory = async (category_id,page) => {
+    return await getCoursesOfCategory(category_id,page);
+}
+
+export const fetchCourseData = async (course_id) => {
+    return await getCourseData(course_id);
 }

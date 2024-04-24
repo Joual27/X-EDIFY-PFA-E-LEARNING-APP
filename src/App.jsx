@@ -7,6 +7,11 @@ import InstructorDashboard from "./pages/InstructorDashboard.jsx";
 import PublicOrStudentRoute from "./components/hoc/PublicOrStudentRoute.jsx";
 import {UserProvider} from "./hooks/contexts/UserContext.jsx";
 import RoleBasedPrivateRoute from "./components/hoc/RoleBasedPrivateRoute.jsx";
+import RequiredAuth from "./pages/RequiredAuth.jsx";
+import StudentDashboard from "./pages/StudentDashboard.jsx";
+import CourseContentPage from "./pages/CourseContentPage.jsx";
+import UpdateProfilePage from "./pages/UpdateProfilePage.jsx";
+import AdminDashboard from "./pages/AdminDashboard.jsx";
 
 function App() {
     return (
@@ -15,13 +20,18 @@ function App() {
                 <Router>
                     <Routes>
                         <Route path='/' element={<Home/>}/>
+                        <Route path='/auth/required' element={<RequiredAuth/>}/>
+                        <Route path='/admin/dashboard' element={<AdminDashboard/>}/>
+                        <Route path='/course/content/:id' element={<CourseContentPage/>}/>
+                        <Route path='/student/dashboard' element={<StudentDashboard/>}/>
+                        <Route path='/user/profile/update' element={<UpdateProfilePage/>}/>
                         <Route path='/instructor/dashboard' element={<RoleBasedPrivateRoute allowedRole='instructor'/>}>
                             <Route index element={<InstructorDashboard/>}/>
                         </Route>
                         <Route path='/courses/all' element={<PublicOrStudentRoute/>}>
                             <Route index element={<AllCourses/>}/>
                         </Route>
-                        <Route path='/course' element={<PublicOrStudentRoute/>}>
+                        <Route path='/course/:id' element={<PublicOrStudentRoute/>}>
                             <Route index element={<SpecificCoursePage/>}/>
                         </Route>
                     </Routes>

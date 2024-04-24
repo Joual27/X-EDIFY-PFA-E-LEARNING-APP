@@ -5,7 +5,7 @@ import {useState} from "react";
 import StudentSignUp from "./StudentSignUp.jsx";
 
 
-export default function Register(){
+export default function Register({needsAuthentication}){
 
     const [registrationType,setRegistrationType] = useState('student');
     const switchToStudent = () => {
@@ -23,12 +23,19 @@ export default function Register(){
                     <img src={student} className='w-[40px] h-[40px] rounded-full' alt="student icon"/>
                     <button onClick={switchToStudent} className={`${(registrationType === 'student' ) ? ' text-secondary' : '' }`}>As a Student</button>
                 </div>
-                <div className='flex gap-[10px] items-center'>
-                    <img src={teacher} className='w-[40px] h-[40px] rounded-full' alt="student icon"/>
-                    <button onClick={switchToTeacher} className={`${(registrationType === 'teacher' ) ? ' text-secondary' : '' }`}>As a Teacher</button>
-                </div>
+                {
+                    !needsAuthentication && <div className='flex gap-[10px] items-center'>
+                        <img src={teacher} className='w-[40px] h-[40px] rounded-full' alt="student icon"/>
+                        <button onClick={switchToTeacher}
+                                className={`${(registrationType === 'teacher') ? ' text-secondary' : ''}`}>As a Teacher
+                        </button>
+                    </div>
+                }
             </div>
-            {registrationType === 'student' ? <StudentSignUp/> : <TeacherSignUp/>}
+            {needsAuthentication && <StudentSignUp needsAuthentication={needsAuthentication}/>}
+            {!needsAuthentication && registrationType === 'student' &&
+                <StudentSignUp needsAuthentication={needsAuthentication}/>}
+            {!needsAuthentication && registrationType === 'teacher' && <TeacherSignUp/>}
         </>
     )
 }

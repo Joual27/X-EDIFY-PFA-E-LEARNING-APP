@@ -11,11 +11,9 @@ import {signUpAsStudent} from "../../data/auth/authenticationData.js";
 
 export default function Auth({shownComponent,onLoginBtnClick,onRegisterBtnClick}){
     function switchToLogin(){
-
         onLoginBtnClick();
     }
     function switchToRegister(){
-
         onRegisterBtnClick();
     }
 
@@ -33,14 +31,13 @@ export default function Auth({shownComponent,onLoginBtnClick,onRegisterBtnClick}
                         <button onClick={switchToRegister} className={`${shownComponent  === 'register' ? 'border-b-2 border-b-primary px-[0.4rem] text-primary' : ''}`}>Sign Up</button>
                         <button onClick={switchToLogin} className={`${shownComponent  === 'login' ? 'border-b-2 border-b-primary px-[0.4rem] text-primary' : ''}`}>Sign In</button>
                     </div>
-                    {shownComponent === 'register' ? <Register/> : <Login/>}
+                    {shownComponent === 'register' ? <Register needsAuthentication={false}/> : <Login needsAuthentication={false}/>}
                 </div>
             </div>
     )
-
 }
 Auth.propTypes = {
     shownComponent : PropTypes.string.isRequired,
-    onLoginBtnClick: PropTypes.func.isRequired,
-    onRegisterBtnClick: PropTypes.func.isRequired
+    onLoginBtnClick: PropTypes.func,
+    onRegisterBtnClick: PropTypes.func
 }

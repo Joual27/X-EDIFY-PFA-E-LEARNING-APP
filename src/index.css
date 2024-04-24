@@ -6,3 +6,9 @@
 body{
     overflow-x: hidden;
 }
+
+
+svg.star-svg {
+    display: inline;
+    width: 25px;
+}

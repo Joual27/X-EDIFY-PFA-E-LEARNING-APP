@@ -5,10 +5,20 @@ import {PublicCoursesContext} from "../../pages/AllCourses.jsx";
 
 
 const Filters = () => {
-    const {setSearchTerm} = useContext(PublicCoursesContext);
-
+    const {setSearchTerm,topCategories,fetchCoursesOfCategory,fetchCourses} = useContext(PublicCoursesContext);
     const handleSearchTermChange = (e) => {
         setSearchTerm(e.target.value);
+    }
+
+
+    const handleCategoryFilterClick = (e) => {
+        let category_id = e.currentTarget.dataset.id;
+        if (category_id === 'all'){
+            fetchCourses()
+        }
+        else{
+            fetchCoursesOfCategory(category_id);
+        }
     }
 
     return(
@@ -30,23 +40,27 @@ const Filters = () => {
                 </div>
                 <div className='w-[2px] h-[35px] bg-main'></div>
                 <div>
-                    <p className='text-[0.9rem] font-medium'>Filter BY Our Popular Categories Or Enter Your Keyword
-                        :</p>
+                    <p className='text-[0.9rem] font-medium'>Filter BY Our Popular Categories Or Enter Your Keyword :</p>
                 </div>
                 <div className='w-[2px] h-[35px] bg-main'></div>
                 <div className='flex gap-[2rem] justify-center items-center'>
                     <div
+                        onClick={handleCategoryFilterClick}
+                        data-id='all'
                         className='flex items-center justify-center py-[0.35rem] px-[1rem] text-white font-medium rounded-md bg-hovers cursor-pointer hover:bg-secHovers'>
-                        <p>Category</p>
+                        <p>All</p>
                     </div>
-                    <div
-                        className='flex items-center justify-center py-[0.35rem] px-[1rem] text-white font-medium rounded-md bg-hovers cursor-pointer hover:bg-secHovers'>
-                        <p>Category</p>
-                    </div>
-                    <div
-                        className='flex items-center justify-center py-[0.35rem] px-[1rem] text-white font-medium rounded-md bg-hovers cursor-pointer hover:bg-secHovers'>
-                        <p>Category</p>
-                    </div>
+                    {
+                        topCategories.map(category => (
+                            <div
+                                key={category.id}
+                                onClick={handleCategoryFilterClick}
+                                data-id={category.id}
+                                className='flex items-center justify-center py-[0.35rem] px-[1rem] text-white font-medium rounded-md bg-hovers cursor-pointer hover:bg-secHovers'>
+                                <p>{category.name}</p>
+                            </div>
+                        ))
+                    }
                 </div>
 
             </div>

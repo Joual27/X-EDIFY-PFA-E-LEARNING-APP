@@ -1,9 +1,13 @@
 import Navbar from "../components/home/Navbar.jsx";
 import Filters from "../components/courses/Filters.jsx";
-import Courses from "../components/courses/Courses.jsx";
 import PublicCourses from "../components/courses/PublicCourses.jsx";
 import {createContext, useEffect, useState} from "react";
-import {fetchAllCourses, filterCourses} from "../data/course/courseData.js";
+import {
+    fetchAllCourses,
+    fetchTopCategories,
+    filterCourses,
+    filterCoursesByCategory
+} from "../data/course/courseData.js";
 import NoData from "../components/ui/NoData.jsx";
 
 export const PublicCoursesContext = createContext();
@@ -12,6 +16,7 @@ const AllCourses = () => {
     const [page,setPage] = useState(1);
     const [totalPages,setTotalPages] = useState(0);
     const [searchTerm,setSearchTerm] = useState('');
+    const [topCategories,setTopCategories] = useState([]);
 
     const fetchCourses = async () => {
         const res = await fetchAllCourses(page);
@@ -22,10 +27,34 @@ const AllCourses = () => {
         else {
             console.log(res.message)
         }
+
+    }
+
+    const fetchCategories = async () => {
+        const res = await fetchTopCategories();
+        if ( res.data.case === 'success'){
+            setTopCategories(res.data.categories);
+        }
     }
 
     const filterCoursesByTerm = async () => {
         const res = await filterCourses(searchTerm,page);
+        if ( res.data.case === 'success' ){
+            setCourses(res.data.courses.data);
+            setTotalPages(res.data.courses.last_page);
+        }
+        else if ( res.data.case === 'empty' ){
+            setCourses([]);
+            setTotalPages(0);
+        }
+        else {
+            console.log(res.message)
+        }
+    }
+
+
+    const fetchCoursesOfCategory = async (category_id) => {
+        const res = await filterCoursesByCategory(category_id,page);
         if ( res.data.case === 'success' ){
             setCourses(res.data.courses.data);
             setTotalPages(res.data.courses.last_page);
@@ -52,6 +81,7 @@ const AllCourses = () => {
 
     useEffect(() => {
         fetchCourses()
+        fetchCategories()
     }, []);
 
     useEffect(() => {
@@ -65,12 +95,15 @@ const AllCourses = () => {
 
     const contextValues = {
         courses,
+        fetchCourses,
         setCourses,
         page,
         switchToNextPage,
         switchToPrevPage,
         totalPages,
-        setSearchTerm
+        setSearchTerm,
+        topCategories,
+        fetchCoursesOfCategory
     }
 
     return(

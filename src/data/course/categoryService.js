@@ -1,9 +1,9 @@
-import authenticatedInstance from "../../services/api/authenticatedInstance.js";
+import instance from "../../services/api/instance.js";
 
 
 export const getAllCategories = async () => {
      try{
-         return await authenticatedInstance.get('/categories/all');
+         return await instance.get('/categories/all');
      }
      catch (error) {
          console.log(error)

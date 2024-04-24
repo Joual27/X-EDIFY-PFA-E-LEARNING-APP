@@ -9,6 +9,7 @@ import About from "../components/home/About.jsx";
 import Partners from "../components/home/Partners.jsx";
 import Auth from "../components/home/Auth.jsx";
 import {useState} from "react";
+import PublicCourses from "../components/courses/PublicCourses.jsx";
 
 export default function Home(){
     const [priorityPage,setPriorityPage] = useState('');
@@ -33,7 +34,7 @@ export default function Home(){
                 <Hero onRegisterBtnClick={showRegister}/>
                 <Stats/>
                 <Categories/>
-                <HomeCourses/>
+                {/*<PublicCourses/>*/}
                 <About/>
                 <Partners/>
                 <Footer/>

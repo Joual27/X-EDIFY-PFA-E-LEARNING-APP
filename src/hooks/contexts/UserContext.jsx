@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import Loading from "../../components/loading/Loading.jsx";
+import instance from "../../services/api/instance.js";
+
 
 const UserContext = createContext();
 
@@ -8,6 +10,7 @@ export const UserProvider = ({ children }) => {
     const [token, setToken] = useState(null);
     const [role, setRole] = useState(null);
     const [isLoading,setIsLoading] = useState(true);
+    const [pageToLoadAfterRequiredAuth,setPageToLoadAfterRequiredAuth] = useState(null);
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -45,11 +48,22 @@ export const UserProvider = ({ children }) => {
         setRole(newRole);
     }, []);
 
+    useEffect(() => {
+        if (token) {
+            instance.defaults.headers.common["Authorization"] =
+                "Bearer " + token;
+            localStorage.setItem("token", token);
+        } else {
+            delete instance.defaults.headers.common["Authorization"];
+            localStorage.removeItem("token");
+        }
+    }, [token]);
+
 
 
     if (!isLoading) {
         return (
-            <UserContext.Provider value={{ user, updateUser, token, updateToken, role, updateRole }}>
+            <UserContext.Provider value={{ user, updateUser, token, updateToken, role, updateRole , setPageToLoadAfterRequiredAuth , pageToLoadAfterRequiredAuth}}>
                 {children}
             </UserContext.Provider>
         );

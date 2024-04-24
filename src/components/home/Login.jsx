@@ -6,16 +6,14 @@ import {signIn} from "../../data/auth/authenticationData.js";
 import {useUser} from "../../hooks/contexts/UserContext.jsx";
 
 
-export default function Login(){
-    const { updateUser, updateToken , updateRole} = useUser();
-
+export default function Login({needsAuthentication}){
+    const { updateUser, updateToken , updateRole , pageToLoadAfterRequiredAuth} = useUser();
 
     const [formData,setFormData] = useState([]);
     const [errors,setErrors] = useState({});
     const [loginSuccess,setLoginSuccess] = useState(false);
     const [loginIssue,setLoginIssue] = useState('');
     let navigate = useNavigate();
-
 
     const handleChange = (e) => {
         setFormData({
@@ -34,9 +32,16 @@ export default function Login(){
             updateUser(res.data.user);
             updateRole(res.data.role);
             if(res.data.role === 'student'){
-                setTimeout(()=>{
-                    navigate('/courses/all');
-                },2000)
+                if (!needsAuthentication){
+                    setTimeout(()=>{
+                        navigate('/courses/all');
+                    },2000)
+                }
+                else {
+                    setTimeout(()=>{
+                        navigate(`/course/${pageToLoadAfterRequiredAuth}`, { replace: true });
+                    },2000)
+                }
             }
             else if(res.data.role === 'instructor'){
                 setTimeout(()=>{

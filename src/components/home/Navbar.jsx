@@ -5,7 +5,6 @@ import {useState} from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {useUser} from "../../hooks/contexts/UserContext.jsx";
-import profile from '../../assets/profile.png'
 import UserMenu from "./UserMenu.jsx";
 export default function Navbar(props){
 

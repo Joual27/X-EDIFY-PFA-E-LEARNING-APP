@@ -2,7 +2,8 @@ import {useEffect, useState} from "react";
 import {signUpAsStudent} from "../../data/auth/authenticationData.js";
 import {useNavigate} from "react-router-dom";
 import {useUser} from "../../hooks/contexts/UserContext.jsx";
-const StudentSignUp = () => {
+const StudentSignUp = ({needsAuthentication}) => {
+    const {pageToLoadAfterRequiredAuth} = useUser();
     const [formData, setFormData] = useState({
         name : null,
         email: null,
@@ -12,7 +13,6 @@ const StudentSignUp = () => {
     });
     const [errors,setErrors] = useState({});
     const [studentCreatedSuccess,setStudentCreatedSuccess] = useState(false);
-
     const { updateUser, updateToken , updateRole} = useUser();
 
     let navigate = useNavigate();
@@ -43,9 +43,16 @@ const StudentSignUp = () => {
 
     useEffect(() => {
         if (studentCreatedSuccess) {
-            setTimeout(()=>{
-                navigate('/courses/all');
-            },2000)
+           if (!needsAuthentication){
+               setTimeout(()=>{
+                   navigate('/courses/all');
+               },2000)
+           }
+           else {
+               setTimeout(()=>{
+                   navigate(`/course/${pageToLoadAfterRequiredAuth}`);
+               },2000)
+           }
         }
     }, [studentCreatedSuccess]);
 

@@ -10,7 +10,7 @@ const Sidebar = () => {
             <aside
                 className="flex flex-col w-[320px] py-[2rem] h-screen overflow-x-hidden overflow-y-auto bg-dark border-r rtl:border-r-0 rtl:border-l  dark:border-gray-700">
                 <a href="#" className="mx-auto">
-                    <img className="w-[200px] h-[100px]" src={logo} alt=""/>
+                    <img className="w-[200px] h-[80px]" src={logo} alt=""/>
                 </a>
                 <div className="bg-gray-700 w-full h-[1px]"></div>
 
@@ -36,26 +36,6 @@ const Sidebar = () => {
 
 
                             <span className="mx-4 font-medium">Dashboard</span>
-                        </a>
-
-                        <a className="flex items-center px-4 py-2 mt-5 text-gray-300 hover:text-orange-500 transition-colors duration-300  rounded-lg "
-                           href="#">
-                            <svg className="" aria-hidden="true"
-                                 xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
-                                 viewBox="0 0 24 24">
-                                <path stroke="currentColor"
-                                      d="M16 19h4a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-2m-2.236-4a3 3 0 1 0 0-4M3 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                            </svg>
-
-                            <span className="mx-4 font-medium">Users</span>
-                        </a>
-
-                        <a className="flex items-center px-4 py-2 mt-5 text-gray-300 hover:text-orange-500 transition-colors duration-300  rounded-lg "
-                           href="#">
-                            <img src={categories} className='w-[20px] h-[20px]' alt=""/>
-
-
-                            <span className="mx-4 font-medium">Categories</span>
                         </a>
 
                         <a className="flex items-center px-4 py-2 mt-5 text-gray-300 hover:text-orange-500 transition-colors duration-300  rounded-lg "

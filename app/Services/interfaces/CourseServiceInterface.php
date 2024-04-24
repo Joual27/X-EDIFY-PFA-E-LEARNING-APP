@@ -17,4 +17,9 @@ interface CourseServiceInterface{
     public function fetchAllCourses();
 
     public function filterCourses($searchTerm);
+    public function fetchTopCategories();
+
+    public function filterCoursesByCategory($categoryId);
+    public function getAllCourseData($course_id);
+
 }

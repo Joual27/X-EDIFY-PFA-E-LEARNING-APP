@@ -20,4 +20,14 @@ class Course extends Model
         return $this->hasMany(Chapter::class);
     }
 
+    public function students()
+    {
+        return $this->belongsToMany(Student::class,'courses_of_students');
+    }
+
+    public function reviews(){
+        return $this->hasMany(Review::class);
+    }
+
+
 }

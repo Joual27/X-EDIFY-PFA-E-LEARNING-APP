@@ -2,6 +2,7 @@
 
 namespace App\Services\implementations;
 
+use App\Models\Category;
 use App\Models\Course;
 use App\Models\Temp_Chapter;
 use App\Models\Temp_Content;
@@ -234,5 +235,77 @@ class CourseService implements CourseServiceInterface
             ];
         }
     }
+
+    public function fetchTopCategories(){
+        $res = $this->courseRepository->getTopCategories();
+        if ($res[0] instanceof Category){
+            return[
+                'case' => 'success',
+                'categories' => $res
+            ];
+        }
+        else{
+            return [
+                'case' => 'error',
+                'message' => $res
+            ];
+        }
+    }
+
+    public function filterCoursesByCategory($categoryId){
+        $res = $this->courseRepository->getCoursesOfCategory($categoryId);
+        if($res){
+            return[
+                'case' => 'success',
+                'courses' => $res
+            ];
+        }
+        else if($res === null){
+            return[
+                'case' => 'empty',
+            ];
+        }
+        else{
+            return [
+                'case' => 'error',
+                'message' => $res
+            ];
+        }
+    }
+
+
+    public function fetchAllCourseData($course_id){
+        $res = $this->courseRepository->getCourseById($course_id);
+        if ($res instanceof Course){
+            return[
+                'case' => 'success',
+                'course' => $res
+            ];
+        }
+        else{
+            return [
+                'case' => 'error',
+                'message' => $res
+            ];
+        }
+    }
+
+    public function getAllCourseData($course_id){
+        $res = $this->courseRepository->getCourseById($course_id);
+        if ($res instanceof Course){
+            return[
+                'case' => 'success',
+                'course' => $res
+            ];
+        }
+        else{
+            return [
+                'case' => 'error',
+                'message' => $res
+            ];
+        }
+    }
+
+
 
 }

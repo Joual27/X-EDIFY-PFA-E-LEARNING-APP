@@ -1,5 +1,6 @@
 <?php
 namespace App\Repositories\implementations;
+use App\Models\Category;
 use App\Models\User;
 use App\Repositories\interfaces\UserRepositoryInterface;
 
@@ -43,5 +44,11 @@ class UserRepository implements UserRepositoryInterface{
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+
+
+
+
+
 }
 ?>

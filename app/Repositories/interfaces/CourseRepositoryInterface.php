@@ -18,6 +18,7 @@ interface CourseRepositoryInterface {
     public function getAllCourses();
 
     public function getCourseByTerm($searchTerm);
+    public function getCoursesOfCategory($category_id);
 
 }
 

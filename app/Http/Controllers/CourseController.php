@@ -202,8 +202,6 @@ class CourseController extends Controller
             ]);
         }
     }
-
-
     public function fetchAllCourses()
     {
         $res = $this->courseService->fetchAllCourses();
@@ -242,6 +240,61 @@ class CourseController extends Controller
             ]);
         }
     }
+
+    public function fetchTopCategories()
+    {
+        $res = $this->courseService->fetchTopCategories();
+        if ($res['case'] === 'success'){
+            return response()->json([
+                'case' => 'success',
+                'categories' => $res['categories']
+            ]);
+        }
+        else{
+            return response()->json([
+                'case' => 'error',
+                'message' => $res['message']
+            ]);
+        }
+    }
+
+    public function filterCoursesByCategory($category_id){
+        $res = $this->courseService->filterCoursesByCategory($category_id);
+        if ($res['case'] === 'success'){
+            return response()->json([
+                'case' => 'success',
+                'courses' => $res['courses']
+            ]);
+        }
+        else if($res['case'] === 'empty'){
+            return response()->json([
+                'case' => 'empty'
+            ]);
+        }
+        else{
+            return response()->json([
+                'case' => 'error',
+                'message' => $res['message']
+            ]);
+        }
+    }
+    public function fetchCourseData($courseId){
+        $res = $this->courseService->getAllCourseData($courseId);
+        if($res['case'] === 'success'){
+            return response()->json([
+                'case' => 'success',
+                'course' => $res['course']
+            ]);
+        }
+        else{
+            return response()->json([
+                'case' => 'error',
+                'message' => $res['message']
+            ]);
+        }
+    }
+
+
 
 }
 

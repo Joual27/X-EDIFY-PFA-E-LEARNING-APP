@@ -178,8 +178,6 @@ class CourseRepository implements CourseRepositoryInterface{
          }
     }
 
-
-
     public function getCoursesOfInstructor($instructor_id)
     {
         try{
@@ -192,7 +190,7 @@ class CourseRepository implements CourseRepositoryInterface{
 
     public function getCourseById($id){
         try{
-            return Course::with('chapters.topics.content')->where('id',$id)->first();
+            return Course::with('chapters.topics.content','category','instructor.user')->where('id',$id)->first();
         }
         catch (\Exception $e) {
             return $e->getMessage();
@@ -236,4 +234,27 @@ class CourseRepository implements CourseRepositoryInterface{
         }
     }
 
+    public function getTopCategories(){
+        try {
+            return Category::orderBy('created_at','desc')->limit(3)->get();
+        }
+        catch (\Exception $e){
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getCoursesOfCategory($category_id)
+    {
+        try {
+            $courses = Course::with('instructor.user', 'category')
+                ->where('category_id', $category_id)
+                ->orderByDesc('created_at')
+                ->paginate(5);
+
+            return $courses->isEmpty() ? null : $courses;
+        }
+        catch (\Exception $e){
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 }

@@ -30,7 +30,7 @@ class AdminRepository implements AdminRepositoryInterface
     public function getAllUsers(){
        try{
            $allAdminsIds = Admin::all()->pluck('user_id')->toArray();
-           return User::with('student','instructor')->whereNotIn('id', $allAdminsIds)->get();
+           return User::with('student','instructor')->whereNull('banned_at')->whereNotIn('id', $allAdminsIds)->get();
        }
        catch(\Exception $e){
            return $e->getMessage();
@@ -54,8 +54,50 @@ class AdminRepository implements AdminRepositoryInterface
             return $e->getMessage();
         }
     }
+    public function findCategoryById($id)
+    {
+        try{
+            return Category::find($id);
+        }
+        catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
 
+    public function editCategory($category_name,$id)
+    {
+       try{
+           $category = Category::find($id);
+           $category->name = $category_name;
+           $category->save();
+           return $category;
+       }
+       catch(\Exception $e){
+           return $e->getMessage();
+       }
+    }
 
+    public function removeCategory($id){
+        try{
+            $category =  Category::find($id)->delete();
+            return true;
+        }
+        catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    public function denyAccessOfUser($id){
+        try{
+            $user = User::find($id);
+            $user->banned_at = now();
+            $user->save();
+            return $user;
+        }
+        catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
 
 
 }

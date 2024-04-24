@@ -70,13 +70,100 @@ class AdminController extends Controller
     }
 
 
-    public function createUser(CategoryRequest $request)
+    public function createCategory(CategoryRequest $request)
     {
         $validated_data = $request->validated();
         $res = $this->adminService->createCategory($validated_data['name']);
         if($res['case'] === 'success'){
             return response()->json([
                 'case' => 'success',
+            ]);
+        }
+        else{
+            return response()->json([
+                'case' => 'error',
+                'message' => $res['message']
+            ]);
+        }
+    }
+
+
+    public function getCategoryData($category_id)
+    {
+        $res = $this->adminService->getCategoryData($category_id);
+        if($res['case'] === 'success'){
+            return response()->json([
+                'case' => 'success',
+                'category' => $res
+            ]);
+        }
+        else{
+            return response()->json([
+                'case' => 'error',
+                'message' => $res['message']
+            ]);
+        }
+    }
+
+
+    public function fetchCategoryData($category_id)
+    {
+        $res = $this->adminService->getCategoryData($category_id);
+        if($res['case'] === 'success'){
+            return response()->json([
+                'case' => 'success',
+                'category' => $res['category']
+            ]);
+        }
+        else{
+            return [
+                'case' => 'error',
+                'message' => $res['message']
+            ];
+        }
+    }
+
+    public function updateCategory(CategoryRequest $request, $category_id)
+    {
+        $request= $request->validated();
+        $res = $this->adminService->updateCategory($request['name'],$category_id);
+        if($res['case'] === 'success'){
+            return response()->json([
+                'case' => 'success'
+            ]);
+        }
+        else{
+            return response()->json([
+                'case' => 'error',
+                'message' => $res['message']
+            ]);
+        }
+    }
+
+
+    public function deleteCategory($id)
+    {
+        $res = $this->adminService->deleteCategory($id);
+        if($res['case'] === 'success'){
+            return response()->json([
+                'case' => 'success'
+            ]);
+        }
+        else{
+            return response()->json([
+                'case' => 'error',
+                'message' => $res['message']
+            ]);
+        }
+    }
+
+
+    public function banUser($id)
+    {
+        $res = $this->adminService->banUser($id);
+        if($res['case'] === 'success'){
+            return response()->json([
+                'case' => 'success'
             ]);
         }
         else{

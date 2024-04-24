@@ -23,7 +23,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/admin/stats',[AdminController::class,'fetchStats']);
 Route::get('/admin/users/all',[AdminController::class,'fetchAllUsers']);
 Route::get('/admin/categories/all',[AdminController::class,'fetchAllCategories']);
-Route::get('/admin/category/create',[AdminController::class,'createUser']);
+Route::get('/category/data/{category_id}',[AdminController::class,'getCategoryData']);
+Route::post('/admin/category/create',[AdminController::class,'createCategory']);
+Route::get('/admin/category/{category_id}/data',[AdminController::class,'fetchCategoryData']);
+Route::post('/admin/category/{category_id}/update',[AdminController::class,'updateCategory']);
+Route::delete('/admin/category/{id}/delete',[AdminController::class,'deleteCategory']);
+Route::put('/admin/user/{id}/ban',[AdminController::class,'banUser']);
 
 
 Route::middleware('guest')->group(function () {

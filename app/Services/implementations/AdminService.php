@@ -83,5 +83,85 @@ class AdminService implements AdminServiceInterface{
         }
     }
 
+    public function getCategoryData($category_id){
+        $res = $this->adminRepository->findCategoryById($category_id);
+        if ($res instanceof Category){
+            return[
+                'case' => 'success',
+                'category' => $res,
+            ];
+        }
+        else{
+            return [
+                'case' => 'error',
+                'message' => $res
+            ];
+        }
+    }
+
+    public function fetchCategoryData($category_id)
+    {
+        $res = $this->adminRepository->findCategoryById($category_id);
+        if ($res instanceof Category){
+            return[
+                'case' => 'success',
+                'category' => $res
+            ];
+        }
+        else {
+            return [
+                'case' => 'error',
+                'message' => $res
+            ];
+        }
+    }
+
+    public function updateCategory($category_name, $category_id){
+        $res = $this->adminRepository->editCategory($category_name, $category_id);
+        if ($res instanceof Category){
+            return[
+                'case' => 'success'
+            ];
+        }
+        else{
+            return [
+                'case' => 'error',
+                'message' => $res
+            ];
+        }
+    }
+
+    public function deleteCategory($id){
+        $res = $this->adminRepository->removeCategory($id);
+        if ($res === true){
+            return[
+                'case' => 'success',
+            ];
+        }
+        else{
+            return [
+                'case' => 'error',
+                'message' => $res
+            ];
+        }
+    }
+    public function banUser($id){
+        $res = $this->adminRepository->denyAccessOfUser($id);
+        if ($res instanceof User){
+            return [
+                'case' => 'success'
+            ];
+        }
+        else{
+            return [
+                'case' => 'error',
+                'message' => $res
+            ];
+        }
+    }
+
+
+
+
 
 }

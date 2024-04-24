@@ -56,7 +56,6 @@ class AuthController extends Controller
 
         }
     }
-
     public function login(LoginRequest $request)
     {
         $validated_data = $request->validated();
@@ -77,6 +76,11 @@ class AuthController extends Controller
             return response()->json([
                 'case' => 'incorrect_password',
                 'message' => 'Incorrect password',
+            ]);
+        }
+        else if($res['case'] === 'banned'){
+            return response()->json([
+                'case' => 'banned',
             ]);
         }
         else{

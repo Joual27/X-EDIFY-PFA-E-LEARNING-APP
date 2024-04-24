@@ -84,4 +84,21 @@ class User extends Authenticatable implements JWTSubject
         return $this->instructor()->exists();
     }
 
+    public function getUserRole()
+    {
+        if ($this->admin()->exists()) {
+            return 'admin';
+        }
+        elseif ($this->student()->exists()) {
+            return 'student';
+        }
+        elseif ($this->instructor()->exists()) {
+            return 'instructor';
+        }
+        else{
+            return 'none';
+        }
+    }
+
+
 }

@@ -19,39 +19,46 @@ class AuthenticationService implements AuthenticationServiceInterface
     public function authenticate(array $credentials){
        $logging_user = $this->userRepository->findUserByEmail($credentials['email']);
        if($logging_user){
-           if(Auth::attempt($credentials)){
-               $token = auth()->guard('api')->login($logging_user);
-               if($logging_user->is_admin()){
-                   return [
-                       'case' => 'success',
-                       'user' => $logging_user,
-                       'role' => 'admin',
-                       'token' => $token
-                   ];
-               }
-               else if($logging_user->is_student()){
-                   return [
-                       'case' => 'success',
-                       'user' => $logging_user,
-                       'role' => 'student',
-                       'token' => $token
-                   ];
-               }
-               else if($logging_user->is_instructor()){
-                   return [
-                       'case' => 'success',
-                       'user' => $logging_user,
-                       'role' => 'instructor',
-                       'token' => $token
-                   ];
-               }
+            if($logging_user->banned_at){
+                return [
+                    'case' => 'banned'
+                ];
+            }
+            else{
+                if(Auth::attempt($credentials)){
+                    $token = auth()->guard('api')->login($logging_user);
+                    if($logging_user->is_admin()){
+                        return [
+                            'case' => 'success',
+                            'user' => $logging_user,
+                            'role' => 'admin',
+                            'token' => $token
+                        ];
+                    }
+                    else if($logging_user->is_student()){
+                        return [
+                            'case' => 'success',
+                            'user' => $logging_user,
+                            'role' => 'student',
+                            'token' => $token
+                        ];
+                    }
+                    else if($logging_user->is_instructor()){
+                        return [
+                            'case' => 'success',
+                            'user' => $logging_user,
+                            'role' => 'instructor',
+                            'token' => $token
+                        ];
+                    }
 
-           }
-           else{
-               return [
-                  'case' => 'incorrect_password',
-               ] ;
-           }
+                }
+                else{
+                    return [
+                        'case' => 'incorrect_password',
+                    ] ;
+                }
+            }
        }
        else{
            return [

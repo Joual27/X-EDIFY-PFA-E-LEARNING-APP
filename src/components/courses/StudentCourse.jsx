@@ -69,8 +69,14 @@ const StudentCourse = ({ course }) => {
                     <p className='font-medium'>{course.title}</p>
                     <p className='text-gray text-[0.85rem] font-semibold'>{course.description}</p>
                     <div className='flex gap-[7.5px] items-center'>
-                        <p className='text-primary font-medium text-[0.9rem] underline'>Expires in</p>
-                        <p className='text-main font-medium text-[0.9rem]'>{remainingTime > 0 ? `${Math.floor(remainingTime / 60)}H ${remainingTime % 60}MIN` : 'Expired'}</p>
+                        {
+                            isCompleted ? (<p className='text-green font-medium text-[0.9rem] text-center'>Completed</p>) : (
+                                <>
+                                    <p className='text-primary font-medium text-[0.9rem] underline'>Expires in</p>
+                                    <p className='text-main font-medium text-[0.9rem]'>{remainingTime > 0 ? `${Math.floor(remainingTime / 60)}H ${remainingTime % 60}MIN` : 'Expired'}</p>
+                                </>
+                            )
+                        }
                     </div>
                 </div>
                 <div className='py-[1rem] flex gap-[1.5rem] items-center'>

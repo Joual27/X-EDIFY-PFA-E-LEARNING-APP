@@ -8,6 +8,9 @@ const PublicOrStudentRoute = () => {
     if (role === 'instructor') {
         return <Navigate to="/instructor/dashboard" replace />;
     }
+    else if (role === 'admin'){
+        return <Navigate to="/admin/dashboard" replace />;
+    }
     return <Outlet />;
 };
 

@@ -1,12 +1,13 @@
 import logo from '../../assets/logo.png'
 // import phone from '../assets/phone.png'
 import menu from '../../assets/menu.svg'
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {useUser} from "../../hooks/contexts/UserContext.jsx";
 import UserMenu from "./UserMenu.jsx";
 export default function Navbar(props){
+
 
     const [navOpen,setNavOpen] = useState(false);
     const {user,role} = useUser();
@@ -14,6 +15,7 @@ export default function Navbar(props){
     const toggleNav = () => {
         setNavOpen(!navOpen);
     }
+
 
     return (
         <nav

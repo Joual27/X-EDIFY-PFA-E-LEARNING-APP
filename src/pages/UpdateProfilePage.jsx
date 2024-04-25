@@ -5,13 +5,12 @@ import {useUser} from "../hooks/contexts/UserContext.jsx";
 import {updateProfileData} from "../data/course/studentData.js";
 
 const UpdateProfilePage = () => {
-    const {user} = useUser();
+    const {user,syncUserData} = useUser();
     const [profileData,setProfileData] = useState({});
     const [errors,setErrors] = useState([]);
     const [incorrectPw,setIncorrectPw] = useState(false);
     const [profileUpdatedSuccess,setProfileUpdatedSuccess] = useState(false);
     const [image,setImage] = useState('');
-
     const handleDataChange = (e) => {
         setProfileData({
             ...profileData,
@@ -46,8 +45,8 @@ const UpdateProfilePage = () => {
         e.preventDefault();
         const res = await updateProfileData(profileData);
         if (res.data.case === 'success'){
+            syncUserData();
             setProfileUpdatedSuccess(true);
-            localStorage.setItem('user',JSON.stringify(res.data.user));
         }
         else if(res.data.case === 'incorrect_pw'){
             setIncorrectPw(true);

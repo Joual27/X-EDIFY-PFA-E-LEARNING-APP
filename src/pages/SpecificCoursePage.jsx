@@ -73,7 +73,7 @@ const SpecificCoursePage = () => {
         if (courseAlreadyEnrolled === true) {
             const timer = setTimeout(() => {
                 setCourseAlreadyEnrolled(false);
-            }, 250);
+            }, 2500);
             return () => clearTimeout(timer);
         }
     }, [courseAlreadyEnrolled]);

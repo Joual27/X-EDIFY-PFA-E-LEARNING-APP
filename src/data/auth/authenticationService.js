@@ -31,3 +31,24 @@ export const authenticate = async (credentials) => {
         throw error
     }
 }
+
+export const signOut = async () => {
+    try{
+        return await instance.post('/logout');
+    }
+    catch (error) {
+        console.log(error)
+        throw error
+    }
+}
+
+
+export const getAuthenticatedUser = async () =>{
+    try{
+        return await instance.get('/auth/user');
+    }
+    catch (error) {
+        console.log(error)
+        throw error
+    }
+}

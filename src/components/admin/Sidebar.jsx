@@ -3,8 +3,27 @@ import logo from '../../assets/logo.png'
 import {useUser} from "../../hooks/contexts/UserContext.jsx";
 import profile from '../../assets/profile.png'
 import categories from "../../assets/category.svg";
+import {logout} from "../../data/auth/authenticationData.js";
+import {useNavigate} from "react-router-dom";
 const Sidebar = () => {
-    const {user} = useUser();
+    const {user,logout} = useUser();
+
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        const res = await logout();
+        if (res.data.case === 'logged_out'){
+            logout();
+            localStorage.clear();
+            navigate('/');
+        }
+        else{
+            console.log(res.data.message)
+        }
+    }
+
+
+
     return (
         <div>
             <aside
@@ -38,8 +57,7 @@ const Sidebar = () => {
                             <span className="mx-4 font-medium">Dashboard</span>
                         </a>
 
-                        <a className="flex items-center px-4 py-2 mt-5 text-gray-300 hover:text-orange-500 transition-colors duration-300  rounded-lg "
-                           href="#">
+                        <button onClick={handleLogout} className="flex items-center px-4 py-2 mt-5 text-gray-300 hover:text-orange-500 transition-colors duration-300  rounded-lg ">
                             <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                                  height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor"
@@ -48,7 +66,7 @@ const Sidebar = () => {
 
 
                             <span className="mx-4 font-medium">Log out</span>
-                        </a>
+                        </button>
                     </nav>
                 </div>
             </aside>

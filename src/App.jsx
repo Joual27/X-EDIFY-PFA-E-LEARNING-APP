@@ -21,11 +21,17 @@ function App() {
                     <Routes>
                         <Route path='/' element={<Home/>}/>
                         <Route path='/auth/required' element={<RequiredAuth/>}/>
-                        <Route path='/admin/dashboard' element={<AdminDashboard/>}/>
                         <Route path='/course/content/:id' element={<CourseContentPage/>}/>
-                        <Route path='/student/dashboard' element={<StudentDashboard/>}/>
-                        <Route path='/user/profile/update' element={<UpdateProfilePage/>}/>
-                        <Route path='/instructor/dashboard' element={<RoleBasedPrivateRoute allowedRole='instructor'/>}>
+                        <Route path='/user/profile/update' element={<RoleBasedPrivateRoute allowedRoles={['instructor','student']}/>}>
+                            <Route index element={<UpdateProfilePage/>}/>
+                        </Route>
+                        <Route path='/admin/dashboard' element={<RoleBasedPrivateRoute allowedRoles={['admin']}/>}>
+                            <Route index element={<AdminDashboard/>}/>
+                        </Route>
+                        <Route path='/student/dashboard' element={<RoleBasedPrivateRoute allowedRoles={['student']}/>}>
+                            <Route index element={<StudentDashboard/>}/>
+                        </Route>
+                        <Route path='/instructor/dashboard' element={<RoleBasedPrivateRoute allowedRoles={['instructor']}/>}>
                             <Route index element={<InstructorDashboard/>}/>
                         </Route>
                         <Route path='/courses/all' element={<PublicOrStudentRoute/>}>

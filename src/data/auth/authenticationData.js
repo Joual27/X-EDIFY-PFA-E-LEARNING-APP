@@ -1,4 +1,10 @@
-import {authenticate, registerAsInstructor, registerAsStudent} from "./authenticationService.js";
+import {
+    authenticate,
+    getAuthenticatedUser,
+    registerAsInstructor,
+    registerAsStudent,
+    signOut
+} from "./authenticationService.js";
 
 
 export const signUpAsStudent = async (student) => {
@@ -15,4 +21,13 @@ export const signUpAsInstructor = async (instructor) => {
 export const signIn = async (credentials) => {
     const response = await authenticate(credentials);
     return response;
+}
+
+
+export const logout = async () => {
+    return await signOut();
+}
+
+export const fetchAuthenticatedUser = async () =>{
+    return await getAuthenticatedUser();
 }

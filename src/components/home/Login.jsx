@@ -48,12 +48,20 @@ export default function Login({needsAuthentication}){
                     navigate('/instructor/dashboard');
                 },2000)
             }
+            else if(res.data.role === 'admin'){
+                setTimeout(()=>{
+                    navigate('/admin/dashboard');
+                },2000)
+            }
         }
         else if(res.data.case === 'incorrect_password'){
             setLoginIssue('incorrect_password');
         }
         else if(res.data.case === 'invalid_email'){
             setLoginIssue('invalid_email');
+        }
+        else if(res.data.case === 'banned'){
+            setLoginIssue('banned');
         }
         else{
             const errorData = res.data.errors;
@@ -100,6 +108,13 @@ export default function Login({needsAuthentication}){
                 loginIssue === 'invalid_email' &&
                 <div className="bg-secRed text-white text-[0.85rem] font-medium w-[80%] mx-auto py-[0.5rem] rounded-lg px-[5%]">
                     <p>No User Found with this email !</p>
+                </div>
+            }
+
+            {
+                loginIssue === 'banned' && <div
+                    className="bg-secRed text-white text-[0.85rem] font-medium w-[80%] mx-auto py-[0.5rem] rounded-lg px-[5%]">
+                    <p>SORRY U WERE BANNED FROM ACCESSING THIS WEB APP !</p>
                 </div>
             }
 

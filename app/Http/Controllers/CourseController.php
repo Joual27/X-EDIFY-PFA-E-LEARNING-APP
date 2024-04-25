@@ -191,8 +191,7 @@ class CourseController extends Controller
         $res = $this->courseService->deleteCourse($id);
         if($res['case'] === 'success'){
             return response()->json([
-                'case' => 'success',
-                'course' => $res['course']
+                'case' => 'success'
             ]);
         }
         else{

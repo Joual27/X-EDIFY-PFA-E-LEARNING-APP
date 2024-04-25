@@ -178,14 +178,13 @@ class CourseService implements CourseServiceInterface
             $outcome = $this->courseRepository->removeCourse($res);
             if ($outcome === true){
                 return[
-                    'case' => 'success',
-                    'course' => $res
+                    'case' => 'success'
                 ];
             }
             else{
                 return [
                     'case' => 'error',
-                    'message' => $res
+                    'message' => $outcome
                 ];
             }
         }
@@ -274,21 +273,6 @@ class CourseService implements CourseServiceInterface
     }
 
 
-    public function fetchAllCourseData($course_id){
-        $res = $this->courseRepository->getCourseById($course_id);
-        if ($res instanceof Course){
-            return[
-                'case' => 'success',
-                'course' => $res
-            ];
-        }
-        else{
-            return [
-                'case' => 'error',
-                'message' => $res
-            ];
-        }
-    }
 
     public function getAllCourseData($course_id){
         $res = $this->courseRepository->getCourseById($course_id);

@@ -4,17 +4,33 @@ namespace App\Http\Controllers;
 use App\Http\Requests\InstructorRegistrationRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\StudentRegistrationRequest;
+use App\Models\User;
 use App\Services\interfaces\AuthenticationServiceInterface;
 
 class AuthController extends Controller
 {
     protected AuthenticationServiceInterface $authService;
-
-
     public function __construct(AuthenticationServiceInterface $authService)
     {
        $this->authService = $authService;
     }
+    public function getAuthenticatedUser(){
+        try{
+            $user = auth()->user();
+            $logged_user = User::where('id',$user->id)->with('instructor','student')->first();
+            return response()->json([
+                'case' => 'success',
+                'user'=> $logged_user
+            ]);
+        }
+        catch (\Exception $exception){
+            return response()->json([
+                'case' => 'error',
+                'message' => $exception->getMessage()
+            ]);
+        }
+    }
+
     public function studentRegistration(StudentRegistrationRequest $request){
         $validated_data = $request->validated();
         $res = $this->authService->registerAsStudent($validated_data);
@@ -87,6 +103,21 @@ class AuthController extends Controller
             return response()->json([
                 'case' => 'invalid_email',
                 'message' => 'Invalid email',
+            ]);
+        }
+    }
+
+    public function logout(){
+        try{
+            auth()->logout();
+            return response()->json([
+                'case' => 'logged_out'
+            ]);
+        }
+        catch (\Exception $e){
+            return response()->json([
+                'case' => 'error',
+                'message' => $e->getMessage()
             ]);
         }
     }

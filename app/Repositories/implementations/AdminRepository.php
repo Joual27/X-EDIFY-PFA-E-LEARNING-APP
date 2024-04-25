@@ -19,7 +19,7 @@ class AdminRepository implements AdminRepositoryInterface
           $overallNumberOfUsers = User::whereNotIn('id', $allAdminsIds)->count();
           $overallNumberOfCategories = Category::all()->count();
           $overallNumberOfCourses = Course::all()->count();
-          $overallNumberOfTeachers = instructor::all()->count();
+          $overallNumberOfTeachers = Instructor::all()->count();
           return ['success',$overallNumberOfUsers,$overallNumberOfCategories,$overallNumberOfCourses,$overallNumberOfTeachers];
       }
       catch(\Exception $e){

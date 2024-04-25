@@ -15,7 +15,13 @@ class CheckForRole
      */
     public function handle(Request $request, Closure $next,$role): Response
     {
-        $user = auth()->user;
+        $user = \auth()->user();
+        if(!$user || $user->getUserRole() !==  $role){
+            return \response()->json([
+                'status' => 'no_permissions',
+                'message' => 'Sorry , u have no permissions to perform this action'
+            ]);
+        }
         return $next($request);
     }
 }

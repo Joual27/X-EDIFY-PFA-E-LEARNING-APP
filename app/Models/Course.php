@@ -29,5 +29,10 @@ class Course extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function discussion_room()
+    {
+        return $this->hasOne(DiscussionRoom::class);
+    }
+
 
 }

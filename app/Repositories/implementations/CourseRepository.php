@@ -4,6 +4,7 @@ use App\Models\Category;
 use App\Models\Chapter;
 use App\Models\Content;
 use App\Models\Course;
+use App\Models\DiscussionRoom;
 use App\Models\Temp_Chapter;
 use App\Models\Temp_Content;
 use App\Models\Temp_Course;
@@ -171,6 +172,9 @@ class CourseRepository implements CourseRepositoryInterface{
                   }
              }
              Temp_Course::find($courseData->id)->delete();
+             DiscussionRoom::create([
+                'course_id' => $created_course->id
+             ]);
              return $created_course;
          }
          catch (\Exception $e) {
@@ -190,7 +194,7 @@ class CourseRepository implements CourseRepositoryInterface{
 
     public function getCourseById($id){
         try{
-            return Course::with('chapters.topics.content','category','instructor.user')->where('id',$id)->first();
+            return Course::with('chapters.topics.content','category','instructor.user','discussion_room')->where('id',$id)->first();
         }
         catch (\Exception $e) {
             return $e->getMessage();

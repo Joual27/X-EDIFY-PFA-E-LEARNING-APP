@@ -20,8 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-
 Route::middleware('guest')->group(function () {
     Route::post('register/student', [\App\Http\Controllers\AuthController::class, 'studentRegistration']);
     Route::post('register/instructor', [\App\Http\Controllers\AuthController::class, 'instructorRegistration']);
@@ -30,13 +28,10 @@ Route::middleware('guest')->group(function () {
 
 Route::get('courses/public/all', [\App\Http\Controllers\CourseController::class, 'fetchAllCourses']);
 Route::get('categories/top/3',[\App\Http\Controllers\CourseController::class, 'fetchTopCategories']);
-Route::get('course/details/{course_id}',[\App\Http\Controllers\CourseController::class,'fetchCourseData']);
 Route::post('course/enroll',[\App\Http\Controllers\StudentController::class,'enrollCourse']);
 Route::Post('courses/filter',[\App\Http\Controllers\CourseController::class, 'filterCourses']);
 Route::get('course/{course_id}/reviews/data',[\App\Http\Controllers\StudentController::class,'fetchRatingData']);
 Route::get('category/courses/{category_id}',[\App\Http\Controllers\CourseController::class,'filterCoursesByCategory']);
-
-
 
 Route::middleware('auth:api')->group(function (){
     Route::group(['middleware' => 'role:instructor'], function () {
@@ -48,7 +43,7 @@ Route::middleware('auth:api')->group(function (){
         Route::delete('chapter/delete/{id}', [\App\Http\Controllers\CourseController::class, 'deleteChapter']);
         Route::delete('topic/delete/{id}', [\App\Http\Controllers\CourseController::class, 'deleteTopic']);
         Route::post('content/create', [\App\Http\Controllers\CourseController::class, 'createContent']);
-
+        Route::post('/message/send',[\App\Http\Controllers\DiscussionRoomController::class,'sendMessage']);
         Route::post('course/post', [\App\Http\Controllers\CourseController::class, 'postCourse']);
         Route::get('instructor/{instructor_id}/courses', [\App\Http\Controllers\CourseController::class, 'fetchCoursesOfInstructor']);
         Route::delete('course/delete/{id}', [\App\Http\Controllers\CourseController::class, 'deleteCourse']);
@@ -63,7 +58,11 @@ Route::middleware('auth:api')->group(function (){
         Route::post('course/completed/finalize',[\App\Http\Controllers\StudentController::class,'markCourseAsCompleted']);
         Route::get('course/completed/{course_id}/{student_id}',[\App\Http\Controllers\StudentController::class,'isCourseCompleted']);
         Route::post('profile/update',[\App\Http\Controllers\StudentController::class,'updateProfile']);
+        Route::get('course/details/{course_id}',[\App\Http\Controllers\CourseController::class,'fetchCourseData']);
+        Route::get('/room/{room_id}/messages',[\App\Http\Controllers\DiscussionRoomController::class,'getRoomMessages']);
+        Route::post('/message/send',[\App\Http\Controllers\DiscussionRoomController::class,'sendMessage']);
     });
+
 
 
     Route::group(['middleware' => 'role:admin'], function () {
@@ -80,7 +79,6 @@ Route::middleware('auth:api')->group(function (){
 
 
     Route::get('/auth/user',[AuthController::class,'getAuthenticatedUser']);
-
 
     Route::post('/logout',[AuthController::class,'logout']);
 });

@@ -16,6 +16,7 @@ import close from "../assets/close.png";
 import review from '../assets/review.png'
 import '../index.css'
 import { Rating } from "react-simple-star-rating";
+import DiscussionRoom from "../components/chat/DiscussionRoom.jsx";
 export const CourseContentContext = createContext();
 const CourseContentPage = () => {
     const { id } = useParams();
@@ -28,6 +29,7 @@ const CourseContentPage = () => {
     const [shownNextButton,setShownNextButton] = useState(false);
     const [shownReviewsPopup,setShownReviewsPopup] = useState(false);
     const [courseRatedSuccessfully,setCourseRatedSuccessfully] = useState(false);
+    const [activeView,setActiveView] = useState('content');
     const navigate = useNavigate();
     const [reviewData,setReviewData] = useState({
         course_id : id,
@@ -86,6 +88,13 @@ const CourseContentPage = () => {
     }
     const handleShowingRatingPopup = () => {
         setShownReviewsPopup(true);
+    }
+
+    const switchToCourseContent = () => {
+        setActiveView('content');
+    }
+    const switchToDiscussionRoom = () => {
+        setActiveView('room');
     }
 
     const handleShowingNextTopic = async () => {
@@ -152,35 +161,41 @@ const CourseContentPage = () => {
                 <Navbar/>
                 <div
                     className='w-full flex items-center gap-[1.5rem] justify-center text-overlay font-medium text-[0.9rem] my-[5rem]'>
-                    <button className='border-b-2 border-b-primary px-[0.5rem]'>Course Content</button>
-                    <button>Discussion Room</button>
+                    <button onClick={switchToCourseContent} className={activeView === 'content' ? 'border-b-2 border-b-primary px-[0.5rem]}' : ''}>Course Content</button>
+                    <button onClick={switchToDiscussionRoom} className={activeView === 'room' ? 'border-b-2 border-b-primary px-[0.5rem]}' : ''}>Discussion Room</button>
                 </div>
                 <div className='w-[80%] flex justify-between mx-auto'>
                     {
-                        courseData.chapters && <>
-                            <CourseContentMenu/>
-                            <CourseVideo
-                                url={courseData.chapters[currentChapterIndex].topics[currentTopicIndex].content.link_to_ressource}/>
-                        </>
+                        activeView === 'content' ? (
+                            courseData.chapters && <>
+                                <CourseContentMenu/>
+                                <CourseVideo
+                                    url={courseData.chapters[currentChapterIndex].topics[currentTopicIndex].content.link_to_ressource}/>
+                            </>
+                        ) : (
+                            <DiscussionRoom/>
+                        )
                     }
                 </div>
                 <div className='w-[80%] flex justify-end items-center gap-[1rem] mx-auto mt-[3rem]'>
-                    {shownNextButton ?
-                        currentTopicIndex === courseData.chapters[currentChapterIndex].topics.length - 1 && currentChapterIndex === courseData.chapters.length - 1 ? (
-                            <button
-                                onClick={handleShowingRatingPopup}
-                                className='bg-primary flex items-center justify-center text-white font-medium rounded-sm px-[0.75rem] py-[0.25rem] hover:bg-hovers'>
-                                Mark As Completed
-                            </button>
-                        ) : (
-                            <button
-                                onClick={handleShowingNextTopic}
-                                className='bg-primary flex items-center justify-center text-white font-medium rounded-sm px-[0.75rem] py-[0.25rem] hover:bg-hovers'>
-                                Next
-                            </button>
-                        )
-                        : (
-                            <p className='text-main text-[0.8rem] underline'>Please continue watching the video first !</p>
+                    {
+                        activeView === 'content' && (shownNextButton ?
+                            currentTopicIndex === courseData.chapters[currentChapterIndex].topics.length - 1 && currentChapterIndex === courseData.chapters.length - 1 ? (
+                                <button
+                                    onClick={handleShowingRatingPopup}
+                                    className='bg-primary flex items-center justify-center text-white font-medium rounded-sm px-[0.75rem] py-[0.25rem] hover:bg-hovers'>
+                                    Mark As Completed
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={handleShowingNextTopic}
+                                    className='bg-primary flex items-center justify-center text-white font-medium rounded-sm px-[0.75rem] py-[0.25rem] hover:bg-hovers'>
+                                    Next
+                                </button>
+                            )
+                            : (
+                                <p className='text-main text-[0.8rem] underline'>Please continue watching the video first !</p>
+                            )
                         )
                     }
                 </div>

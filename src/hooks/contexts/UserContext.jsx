@@ -98,7 +98,6 @@ export const UserProvider = ({ children }) => {
         return (
             <Loading/>
         );
-
     }
 };
 
